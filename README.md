@@ -27,7 +27,7 @@ pip install -r requirements.txt
 
 ## Pretrained backbone
 
-Download the SegFormer pretrained model (pretrained on ImageNet) from weights(https://drive.google.com/drive/folders/1JsrHNAAL5zc5XKPbgZNgk68AhGNlJyML?usp=sharing), e.g., mit_b0.pth. Place the ImageNet-pretrained MiT backbone weights in `pretrained/` folder:
+Download the SegFormer pretrained model (pretrained on ImageNet) from [segformer_weights](https://drive.google.com/drive/folders/1JsrHNAAL5zc5XKPbgZNgk68AhGNlJyML?usp=sharing), e.g., mit_b0.pth. Place the ImageNet-pretrained MiT backbone weights in `pretrained/` folder:
 
 ```text
 pretrained/
