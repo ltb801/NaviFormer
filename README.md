@@ -58,73 +58,31 @@ Labels must be single-channel class-index masks. The default ignored label is `2
 
 ## Training
 
-Run one process per GPU. A single-GPU example is:
+Training script for semantic segmentation with RGB and Depth input:
 
 ```bash
-torchrun --standalone --nproc_per_node=1 main.py \
-  --train-dir /path/to/dataset \
-  --val-dir /path/to/dataset \
-  --train-list /path/to/train.txt \
-  --val-list /path/to/val.txt \
-  --backbone mit_b0 \
-  --num-classes 16 \
-  --batch-size 4 \
-  --ckpt naviformer_mit_b0
+python main.py --backbone mit_b0 -c exp_name --gpu 0 1 2
 ```
 
 Outputs are written to `ckpt/<name>/`, including the best model (`model-best.pth.tar`), latest non-best checkpoint (`checkpoint.pth.tar`), final checkpoint, logs, arguments, and per-step losses. Resume training with `--resume path/to/checkpoint.pth.tar`.
 
 ## Evaluation
 
-Evaluate a checkpoint on a validation split with:
+Evaluation script:
 
 ```bash
-torchrun --standalone --nproc_per_node=1 main.py \
-  --evaluate \
-  --train-dir /path/to/dataset \
-  --val-dir /path/to/dataset \
-  --train-list /path/to/train.txt \
-  --val-list /path/to/val.txt \
-  --backbone mit_b0 \
-  --num-classes 16 \
-  --resume ckpt/naviformer_mit_b0/model-best.pth.tar
+python main.py --gpu 0 --resume path_to_pth --evaluate  
 ```
 
 The script reports global accuracy, mean accuracy, mean IoU, and validation FPS. Use `--save-image N --save-img-path results/validation` to save `N` predicted masks.
 
 ## Inference
 
-Use the same backbone and number of classes that were used to train the checkpoint.
-
-Single RGB-depth pair:
+Inference script:
 
 ```bash
-python inference.py \
-  --rgb path/to/rgb.png \
-  --depth path/to/depth.png \
-  --ckpt ckpt/naviformer_mit_b0/model-best.pth.tar \
-  --backbone mit_b0 \
-  --num-classes 16 \
-  --output mask.png \
-  --output-colour mask_colour.png
+python inference.py --rgb-dir path_to_rgb --depth-dir path_to_depth --ckpt path_to_pth --output-dir results --save-colour --benchmark
 ```
-
-Batch inference pairs files with the same filename stem:
-
-```bash
-python inference.py \
-  --rgb-dir path/to/rgb \
-  --depth-dir path/to/depth \
-  --ckpt ckpt/naviformer_mit_b0/model-best.pth.tar \
-  --backbone mit_b0 \
-  --num-classes 16 \
-  --output-dir results \
-  --batch-size 4 \
-  --save-colour \
-  --benchmark
-```
-
-Alternatively, pass `--pair-list pairs.txt`, where each line is `rgb_path<TAB>depth_path`. The raw output masks contain class indices; colour masks are visualizations only.
 
 ## Citation
 
