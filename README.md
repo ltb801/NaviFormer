@@ -2,8 +2,6 @@
 
 by Ly Bui, Son Lam Phung, Yang Di, Soan Thi Minh Duong, Abdesselam Bouzerdoum
 
-[Paper](https://doi.org/10.1016/j.cviu.2026.104793)
-
 Official PyTorch implementation of **NaviFormer: Multimodal Scene Segmentation for Assistive Navigation**.
 [Paper](https://doi.org/10.1016/j.cviu.2026.104793)
 
@@ -29,7 +27,7 @@ pip install -r requirements.txt
 
 ## Pretrained backbone
 
-Place the ImageNet-pretrained MiT backbone weights in `pretrained/` folder:
+Download the SegFormer pretrained model (pretrained on ImageNet) from weights(https://drive.google.com/drive/folders/1JsrHNAAL5zc5XKPbgZNgk68AhGNlJyML?usp=sharing), e.g., mit_b0.pth. Place the ImageNet-pretrained MiT backbone weights in `pretrained/` folder:
 
 ```text
 pretrained/
