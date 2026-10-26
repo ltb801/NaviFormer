@@ -3,6 +3,7 @@
 by Ly Bui, Son Lam Phung, Yang Di, Soan Thi Minh Duong, Abdesselam Bouzerdoum
 
 Official PyTorch implementation of **NaviFormer: Multimodal Scene Segmentation for Assistive Navigation**.
+
 [Paper](https://doi.org/10.1016/j.cviu.2026.104793)
 
 ## Requirements
@@ -22,6 +23,7 @@ git clone https://github.comltb801/NaviFormer.git
 cd NaviFormer
 
 # Install the dependencies used by this repository
+pip install mmcv==2.2.0 -f https://download.openmmlab.com/mmcv/dist/cu121/torch2.2/index.html
 pip install -r requirements.txt
 ```
 
@@ -36,6 +38,7 @@ pretrained/
 
 ## Dataset format
 
+The datasets we used in this paper include [Cityscapes](https://www.cityscapes-dataset.com/) and [TrueSight](https://documents.uow.edu.au/~phung/TrueSight.html). 
 Store RGB images, semantic labels, and depth images below a common dataset root:
 
 ```text
@@ -51,7 +54,7 @@ dataset/
 Create separate training and validation lists. Each line must contain three paths relative to the dataset root, separated by tabs, in this order:
 
 ```text
-rgb/sample_001.png<TAB>labels/sample_001.png<TAB>depth/sample_001.png
+rgb/sample_001.png labels/sample_001.png depth/sample_001.png
 ```
 
 Labels must be single-channel class-index masks. The default ignored label is `255`. Depth images are converted to three channels when necessary and scaled by `1/1000`.
@@ -81,8 +84,18 @@ The script reports global accuracy, mean accuracy, mean IoU, and validation FPS.
 Inference script:
 
 ```bash
-python inference.py --rgb-dir path_to_rgb --depth-dir path_to_depth --ckpt path_to_pth --output-dir results --save-colour --benchmark
+python inference.py \
+  --rgb-dir path/to/rgb \
+  --depth-dir path/to/depth \
+  --ckpt path/to/ckpt \
+  --output-dir results \
+  --save-colour \
+  --benchmark
 ```
+
+## Acknowledgement
+Our implementation is mainly based on [TokenFusion](https://github.com/yikaiw/TokenFusion#multimodal-token-fusion-for-vision-transformers). Thanks to the authors for their excellent work!
+
 
 ## Citation
 
